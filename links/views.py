@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect
 
-# Create your views here.
+from links.models import ShortenedLink
+
+
+def unshorten_url(request, shortened):
+    link = get_object_or_404(ShortenedLink, shortened=shortened)
+    return redirect(link.url)
