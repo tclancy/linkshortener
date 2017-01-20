@@ -23,9 +23,9 @@ class ShortenedLink(models.Model):
         """
         Update hit count in database, increment locally to reflect change without having to requery
         """
-        self.hits = F("hits") + 1
-        self.save()
         self.hits += 1
+        ShortenedLink.objects.filter(pk=self.id).update(hits=F("hits") + 1)
+        return self.hits
 
     def save(self, *args, **kwargs):
         """
