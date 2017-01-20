@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import F
 from django.utils.timezone import now as tz_now
 
 # set to a ShortURL object below
@@ -17,6 +18,14 @@ class ShortenedLink(models.Model):
 
     def __unicode__(self):
         return self.url
+
+    def record_view(self):
+        """
+        Update hit count in database, increment locally to reflect change without having to requery
+        """
+        self.hits = F("hits") + 1
+        self.save()
+        self.hits += 1
 
     def save(self, *args, **kwargs):
         super(ShortenedLink, self).save(*args, **kwargs)
