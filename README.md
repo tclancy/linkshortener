@@ -1,6 +1,16 @@
 # linkshortener
 Coding exercise, create a URL shortener API.
 
+## Deployment
+
+* Create virtualenv, `pip install -r requirements.txt`
+* `python manage.py migrate` to create the database
+* `python manage.py runserver` will allow you to navigate to the [link listing](http://localhost:8000/links/)
+* Using the form at that URL will allow you to post a new link
+* Visiting http://localhost:8000/[link code] will redirect you to the full URL
+* Visiting http://localhost:8000/links/[link id] will provide the API response
+* `python manage.py test` will run the unit test suite
+
 ## Requirements
 These are the business rules that need to be fulfilled.
 

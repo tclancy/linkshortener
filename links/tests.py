@@ -20,6 +20,8 @@ class ShortenedLinkTests(APITestCase):
         self.assertEqual(1, hits)
         self.assertEqual(1, ShortenedLink.objects.get(pk=self.shortened_link.id).hits)
 
+
+class ShortenedLinkAPITests(APITestCase):
     def test_unicode_urls(self):
         url = "https://twitter.com"
         response = self.client.post("/links/", {"url": url}, format="json")
