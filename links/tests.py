@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -23,7 +25,7 @@ class ShortenedLinkTests(APITestCase):
 
 class ShortenedLinkAPITests(APITestCase):
     def test_unicode_urls(self):
-        url = "https://twitter.com"
+        url = "https://twitter.com/ميمي العنزي"
         response = self.client.post("/links/", {"url": url}, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(ShortenedLink.objects.count(), 1)
