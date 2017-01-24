@@ -11,6 +11,7 @@ from links.serializers import ShortenedLinkSerializer
 
 def unshorten_url(request, shortened):
     link = get_object_or_404(ShortenedLink, shortened=shortened)
+    link.record_view()
     return redirect(link.url)
 
 
@@ -37,7 +38,6 @@ class ShortenedLinkDetail(APIView):
 
     def get(self, request, pk, format=None):
         sl = self.get_object(pk)
-        sl.record_view()
         serializer = ShortenedLinkSerializer(sl)
         return Response(serializer.data)
 

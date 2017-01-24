@@ -12,5 +12,5 @@ urlpatterns = [
 urlpatterns = format_suffix_patterns(urlpatterns)
 
 urlpatterns += [
-    url(r'^(?P<shortened>[a-zA-Z0-9]+)/$', views.unshorten_url),
+    url(r'^(?P<shortened>[a-zA-Z0-9]+)/$', views.unshorten_url, name="unshorten_url"),
 ]
