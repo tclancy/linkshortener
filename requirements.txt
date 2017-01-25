@@ -1,2 +1,5 @@
 Django==1.10.5
 djangorestframework==3.5.3
+ua-parser==0.7.2
+user-agents==1.0.1
+git+git://github.com/selwin/django-user_agents.git#egg=django-user-agents

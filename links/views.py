@@ -12,6 +12,10 @@ from links.serializers import ShortenedLinkSerializer
 def unshorten_url(request, shortened):
     link = get_object_or_404(ShortenedLink, pk=SHORTENER.decode(shortened))
     link.record_view()
+    if request.user_agent.is_mobile and link.mobile_url:
+        return redirect(link.mobile_url)
+    if request.user_agent.is_tablet and link.tablet_url:
+        return redirect(link.tablet_url)
     return redirect(link.url)
 
 
