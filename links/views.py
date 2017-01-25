@@ -5,12 +5,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from links.models import ShortenedLink
+from links.models import ShortenedLink, SHORTENER
 from links.serializers import ShortenedLinkSerializer
 
 
 def unshorten_url(request, shortened):
-    link = get_object_or_404(ShortenedLink, shortened=shortened)
+    link = get_object_or_404(ShortenedLink, pk=SHORTENER.decode(shortened))
     link.record_view()
     return redirect(link.url)
 

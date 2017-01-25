@@ -12,7 +12,6 @@ class ShortenedLink(models.Model):
     url = models.CharField(db_index=True, max_length=255)
     mobile_url = models.CharField(blank=True, max_length=255)
     tablet_url = models.CharField(blank=True, max_length=255)
-    shortened = models.CharField(max_length=20, unique=True, db_index=True)
     created = models.DateTimeField(default=tz_now)
     hits = models.PositiveIntegerField(default=0)
 
@@ -27,14 +26,11 @@ class ShortenedLink(models.Model):
         ShortenedLink.objects.filter(pk=self.id).update(hits=F("hits") + 1)
         return self.hits
 
-    def save(self, *args, **kwargs):
-        try:
-            max_id = ShortenedLink.objects.only("id").order_by("-id")[0]
-        except IndexError:
-            max_id = 1
-        if self.shortened == "":
-            self.shortened = SHORTENER.encode(max_id)
-        super(ShortenedLink, self).save(*args, **kwargs)
+    @property
+    def shortened(self):
+        if self.id:
+            return SHORTENER.encode(self.id)
+        raise ValueError
 
 
 # ShortURL (https://github.com/delight-im/ShortURL)
